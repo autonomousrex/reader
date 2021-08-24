@@ -19,6 +19,7 @@
 
 	<body>
 
+
 		<header class="p-3 bg-dark text-white">
 		    <div class="container">
 		      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -26,18 +27,21 @@
 		          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
 		        </a>
 
-
 		        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
 		        	<input type="file" id="image-picker" accept="image/*" class="form-control form-control-dark" placeholder="Get Image..." aria-label="Search for Image">
 		        </form>
 
-		      </div>
+				<div class="text-end">
+		          <button type="button" class="btn btn-warning disabled" id="listen-button">Listen</button>
+		        </div>
+		      </div>		      
 		    </div>
-		  </header>
+		</header>
+
+
 
 		<main>
 			<div class="container col-xxl-8 px-4 py-1">
-				
 				<div class="row flex-lg-row-reverse align-items-center g-5">
 					<div class="loader" id="loader" style="display:none">Loading...</div>
 					<div id="ocr-contents"></div>
@@ -46,38 +50,10 @@
 		</main>
 
 
-		<script>
-		  const fileInput = document.getElementById('image-picker');
 
-		  fileInput.addEventListener('change', (e) => doSomethingWithFiles(e.target.files));
+		<script src='ocr.js'></script>
+		<script src='speech.js'></script>
 
-
-		  function doSomethingWithFiles(files) {
-
-		  	document.getElementById('loader').style.display = "block";
-
-
-			const worker = Tesseract.createWorker({
-      			logger: m => console.log(m)
-    		});
-    		
-    		Tesseract.setLogging(true);
-
-			(async () => {
-			  await worker.load();
-			  await worker.loadLanguage('eng');
-			  await worker.initialize('eng');
-			  const { data: { text } } = await worker.recognize(files[0]);
-			  console.log(text);
-			  document.getElementById('ocr-contents').innerHTML = text;
-			  await worker.terminate();
-			  document.getElementById('loader').style.display = "none";
-			})();
-
-
-		  }
-
-		</script>
 
 
 	</body>
