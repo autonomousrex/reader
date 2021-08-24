@@ -4,9 +4,14 @@
   url('/fonts/Atkinson-Hyperlegible-Regular-102.ttf')  format('truetype') /* Safari, Android, iOS */
 }
 
-body, p, span, div, h1, h2, h3, h4, h5, input, main div {
+body, p, span, div, h1, h2, h3, h4, h5, input {
   font-family: 'Atkinson', sans-serif;
-  font-size: 1.2em;
+}
+
+div#ocr-contents {
+  font-family: 'Atkinson', sans-serif;
+  font-size:  2em;
+  line-height: 1.7em;
 }
 
 .loader,
