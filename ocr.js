@@ -14,20 +14,19 @@ async function doOcrOnFile(files) {
         let blobURL = URL.createObjectURL(files[0]);
         let blobRes = await fetch(blobURL);
         let blob = await blobRes.blob();
-        let conversionResult = await heic2any({ blob, toType: "image/jpg" });
+        let conversionResult = await heic2any({ blob, toType: "image/jpg", quality: 0.75 });
         doOCR(conversionResult);
 
     } else { 
 
     	doOCR(files[0]);
 	}
-
 }
 
 
 function doOCR(file) {
 	const worker = Tesseract.createWorker({
-					logger: m => console.log(m)
+		logger: m => console.log(m)
 	});
 
 	Tesseract.setLogging(true);
@@ -37,12 +36,11 @@ function doOCR(file) {
 	  await worker.loadLanguage('eng');
 	  await worker.initialize('eng');
   	  const { data: { text } } = await worker.recognize(file);
-  		//const { data: { text } } = await worker.recognize(ocrTarget);
-
-	  console.log(text);
 	  document.getElementById('ocr-contents').innerHTML = text;
 	  await worker.terminate();
 	  document.getElementById('loader').style.display = "none";
 	  document.getElementById('listen-button').classList.toggle("disabled");
+	  //progressUpdate({ status: 'done', data });
 	})();
 }
+
